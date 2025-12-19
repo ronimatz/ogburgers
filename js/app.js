@@ -264,16 +264,65 @@ btnFinalizar.addEventListener('click', () => {
   // quantidade de combos no carrinho
   const qty = state.combos.length;
 
-  // verifica se existe link de checkout para essa quantidade
-  const checkoutUrl = checkoutLinks[qty];
+  // chama a API local para criar o checkout e redirecionar para o link retornado
+  (async () => {
+    try {
+      btnFinalizar.disabled = true;
 
-  if (!checkoutUrl) {
-    alert('Limite atingido. Ajuste o pedido para até 5 promoções.');
-    return;
-  }
+      const payload = {
+        quantity: qty,
+        // enviar as escolhas do primeiro combo como metadata (se houver)
+        burger1: state.combos[0] ? state.combos[0].burger1 : null,
+        burger2: state.combos[0] ? state.combos[0].burger2 : null,
+        drink: state.combos[0] ? state.combos[0].drink : null
+      };
 
-  // redireciona para o checkout correto
-  window.location.href = checkoutUrl;
+      const resp = await fetch('/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await resp.json();
+
+      // possíveis campos com a URL do checkout (tentar em ordem)
+      const possibleUrls = [
+        data.checkoutUrl,
+        data.paymentUrl,
+        data.url,
+        data.redirectUrl,
+        data.secureUrl,
+        data.data && data.data.url,
+        data.data && data.data.checkoutUrl,
+        data.data && data.data.secureUrl,
+        data.transactionUrl
+      ];
+
+      const found = possibleUrls.find(u => typeof u === 'string' && u.length > 0);
+
+      if (found) {
+        window.location.href = found;
+        return;
+      }
+
+      // se o servidor retornou apenas o payload (ex: VELANA_SECRET não setado), tenta usar links estáticos como fallback
+      if (data && data.note && data.payload) {
+        const checkoutUrl = checkoutLinks[qty];
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl;
+          return;
+        }
+      }
+
+      console.error('Resposta inesperada do checkout:', data);
+      alert('Não foi possível criar o checkout. Tente novamente mais tarde.');
+    } catch (err) {
+      console.error(err);
+      alert('Erro ao criar checkout. Veja o console para mais detalhes.');
+    } finally {
+      btnFinalizar.disabled = false;
+    }
+  })();
 });
 
 atualizarCarrinhos();
