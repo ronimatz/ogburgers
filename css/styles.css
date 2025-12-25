@@ -436,3 +436,76 @@ input[type="number"] {
   font-size: 0.9rem;
   color: #777;
 }
+
+/* ===== Mobile fix (iFood-like) ===== */
+@media (max-width: 480px) {
+  body {
+    background: #fafafa;
+  }
+
+  header {
+    padding: 10px 12px;
+  }
+
+  main {
+    padding: 10px 10px 24px;
+  }
+
+  .step-indicator {
+    font-size: 0.82rem;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .promo-card,
+  .summary-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .promo-card h1 {
+    font-size: 1.15rem;
+  }
+
+  .promo-card p {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .promo-price {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+
+  .field-label {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .card-grid {
+    gap: 8px;
+  }
+
+  .product-card {
+    padding: 10px;
+    gap: 10px;
+    border-radius: 12px;
+  }
+
+  /* imagem menor no mobile */
+  .product-image-placeholder,
+  .product-image {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 10px;
+  }
+
+  /* tipografia mais compacta */
+  .product-info-title {
+    font-size: 0.9rem;
+    line-height: 1.15;
+    margin-bottom: 2px;
+  }
+
+  .product-info-des
+
