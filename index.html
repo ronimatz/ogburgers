@@ -48,13 +48,66 @@
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=25577078325243668&ev=PageView&noscript=1"
   /></noscript>
-  <header>
-    <div class="logo">
-      <img src="imgs/tio_smash.png" alt="Tio Smash" class="logo-img">
-      <span class="logo-text">TIO SMASH BURGUER</span>
+  <header class="hero">
+    <!-- background com imagem -->
+    <div class="hero-bg"></div>
+  
+    <!-- topo com botões (voltar / menu) -->
+    <div class="hero-top">
+      <button class="hero-icon-btn" type="button" aria-label="Voltar">←</button>
+      <div class="hero-spacer"></div>
+      <button class="hero-icon-btn" type="button" aria-label="Mais opções">⋯</button>
     </div>
-    <div class="promo-badge" id="promo-badge">3 itens&nbsp;·&nbsp;R$&nbsp;39,90</div>
+  
+    <!-- card branco -->
+    <div class="hero-card">
+  
+      <!-- logo circular central -->
+      <div class="hero-logo-wrap">
+        <img
+          src="imgs/tio_smash.png"
+          alt="Tio Smash Burger"
+          class="hero-logo"
+          onerror="this.style.display='none'; this.parentElement.classList.add('no-logo');"
+        >
+        <div class="hero-logo-fallback">TS</div>
+      </div>
+  
+      <!-- nome -->
+      <h1 class="hero-title">Tio Smash Burger</h1>
+  
+      <!-- infos -->
+      <div class="hero-info">
+  
+        <span class="hero-pill hero-pill-open">
+          <span class="dot"></span> ABERTO
+        </span>
+  
+        <div class="hero-metas">
+          <span class="meta">
+            <span class="ico">🛵</span>
+            <strong>Entrega grátis</strong>
+          </span>
+          <span class="meta">
+            <span class="ico">⏱️</span>
+            30–50 min
+          </span>
+          <span class="meta">
+            <span class="ico">⭐</span>
+            4,9 <span class="muted">(2.136 avaliações)</span>
+          </span>
+        </div>
+  
+      </div>
+  
+      <!-- badge da promoção (mantém integração com JS) -->
+      <div class="promo-badge hero-badge" id="promo-badge">
+        3 itens · R$ 39,90
+      </div>
+  
+    </div>
   </header>
+
 
   <main>
     <div class="step-indicator">
