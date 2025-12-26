@@ -5,10 +5,6 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-body {
-  background: #fafafa;
-  color: #222;
-}
 :root {
   --brand: #b71c1c;
   --muted: #f7f7f7;
@@ -20,15 +16,22 @@ body {
   --base-font-size: 16px;
 }
 
-header {
-  background: #b71c1c;
+body {
+  background: #fafafa;
+  color: #222;
+}
+
+/* ===== Header antigo (vermelho) — manter só se existir em outras páginas =====
+   Importante: NÃO aplicar em .hero
+*/
+header:not(.hero) {
+  background: var(--brand);
   color: #fff;
   padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: sticky;
-  top: 0;
+  position: relative; /* NÃO sticky */
   z-index: 10;
 }
 
@@ -53,20 +56,145 @@ header {
   letter-spacing: 0.4px;
 }
 
+/* Badge (usado no hero também) */
 .promo-badge {
   background: #fff;
-  color: #b71c1c;
-  padding: 4px 10px;
+  color: var(--brand);
+  padding: 6px 12px;
   border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  border: 1px solid rgba(255,255,255,0.5);
-  white-space: nowrap;         
-  display: flex;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid rgba(0,0,0,0.06);
+  white-space: nowrap;
+  display: inline-flex;
   align-items: center;
   gap: 4px;
 }
 
+/* ===== HERO (topo estilo iFood) ===== */
+header.hero {
+  position: relative;
+  background: #111;
+}
+
+/* fundo com foto — caminho correto: CSS está em /css, imagens em /imgs */
+.hero-bg {
+  height: 170px;
+  background: url("../imgs/hero-burgers.jpg") center/cover no-repeat;
+  position: relative;
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.55));
+}
+
+/* card branco */
+.hero-card {
+  position: relative;
+  background: #fff;
+  max-width: 960px;
+  margin: -42px auto 0;
+  border-radius: 24px 24px 0 0;
+  padding: 62px 16px 14px;
+  box-shadow: 0 -10px 24px rgba(0,0,0,.12);
+}
+
+/* logo circular central */
+.hero-logo-wrap {
+  position: absolute;
+  left: 50%;
+  top: -46px;
+  transform: translateX(-50%);
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(0,0,0,.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 4px solid #fff;
+}
+
+.hero-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-logo-fallback {
+  display: none;
+  font-weight: 800;
+  color: var(--brand);
+  font-size: 24px;
+}
+.hero-logo-wrap.no-logo .hero-logo-fallback { display: block; }
+
+.hero-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  margin: 4px 0 10px;
+  color: #111;
+}
+
+.hero-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.hero-pill-open {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+.hero-pill .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #2e7d32;
+}
+
+.hero-metas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 14px;
+  font-size: 14px;
+  color: #333;
+}
+.hero-metas .meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-metas .muted { color: #777; }
+
+/* Badge do hero centralizado */
+.hero-badge,
+#promo-badge {
+  display: block;
+  width: fit-content;
+  margin: 10px auto 0;
+  text-align: center;
+}
+
+/* ===== Layout geral ===== */
 main {
   max-width: 960px;
   margin: 0 auto;
@@ -76,12 +204,6 @@ main {
 .step-indicator {
   display: flex;
   gap: 8px;
- 
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 16px 16px 32px;
-  }
   margin-bottom: 16px;
   font-size: 0.9rem;
   color: #777;
@@ -93,16 +215,17 @@ main {
 }
 
 .step-indicator .active {
-  color: #b71c1c;
-  border-color: #b71c1c;
-  font-weight: 600;
+  color: var(--brand);
+  border-color: var(--brand);
+  font-weight: 700;
 }
 
-.promo-card {
+.promo-card,
+.summary-card {
   background: #fff;
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+  box-shadow: var(--card-shadow);
   margin-bottom: 16px;
 }
 
@@ -119,18 +242,16 @@ main {
 
 .promo-price {
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 800;
   color: #e53935;
   margin-bottom: 12px;
 }
 
-.field-group {
-  margin-bottom: 16px;
-}
+.field-group { margin-bottom: 16px; }
 
 .field-label {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 6px;
   display: block;
 }
@@ -154,24 +275,13 @@ main {
   transition: box-shadow 0.1s ease, border-color 0.1s ease, transform 0.05s ease;
 }
 
-.product-card:active {
-  transform: translateY(1px);
-}
+.product-card:active { transform: translateY(1px); }
 
 .product-card.selected {
   border-color: #e53935;
   box-shadow: 0 4px 10px rgba(229,57,53,0.18);
 }
 
-.product-image-placeholder {
-  flex-shrink: 0;
-  width: 82px;
-  height: 82px;
-  border-radius: 8px;
-  background: #f0f0f0;
-}
-
-/* imagens dos produtos (substitui placeholder) */
 .product-image {
   flex-shrink: 0;
   width: 84px;
@@ -181,31 +291,9 @@ main {
   background: #f0f0f0;
 }
 
-/* destaque para produto TIO SMASH - manter imagens do mesmo tamanho que as demais */
-.product-card.highlight { padding: 8px; }
-.product-card.highlight .image-wrap { position: relative; display: inline-block; }
-.product-card.highlight .product-image { width: 84px; height: 84px; border-radius: 8px; }
-.product-card.highlight .overlay-title {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 8px;
-  text-align: center;
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  pointer-events: none;
-}
-
-/* reduzir gap extra para manter consistência com os demais cards */
-.product-card.highlight { gap: 12px; }
-
 .product-info-title {
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 2px;
 }
 
@@ -217,7 +305,7 @@ main {
 
 .product-info-price {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 800;
   color: #e53935;
 }
 
@@ -238,19 +326,12 @@ input[type="number"] {
   border-radius: 999px;
   border: none;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 800;
   background: #e53935;
   color: #fff;
   cursor: pointer;
   margin-top: 12px;
-  transition: transform 0.05s ease, box-shadow 0.05s ease, filter 0.15s ease;
   box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-}
-
-.btn-primary:active {
-  transform: translateY(1px);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-  filter: brightness(0.98);
 }
 
 .btn-secondary {
@@ -259,7 +340,7 @@ input[type="number"] {
   border-radius: 999px;
   border: 1px solid #ddd;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 700;
   background: #fff;
   color: #111;
   cursor: pointer;
@@ -283,17 +364,16 @@ input[type="number"] {
   background: none;
   color: #2e7d32;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 800;
   padding: 0;
 }
 
 .btn-primary[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
-  filter: grayscale(0.12);
 }
 
-/* ===== Cupom aplicado ===== */
+/* Cupom */
 .coupon {
   display: flex;
   justify-content: space-between;
@@ -321,20 +401,7 @@ input[type="number"] {
   color:#fff;
   align-items:center;
   justify-content:center;
-  font-weight:700;
-  box-shadow:0 2px 6px rgba(54,161,105,0.18);
-}
-.coupon-text .coupon-title { font-weight:700; font-size:0.95rem; color:#123; }
-.coupon-text .coupon-code { font-size:0.9rem; color:#36a169; }
-
-.coupon-right { display:flex; align-items:center; }
-
-.summary-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-  margin-bottom: 16px;
+  font-weight:800;
 }
 
 .summary-item {
@@ -343,9 +410,7 @@ input[type="number"] {
   font-size: 0.9rem;
 }
 
-.summary-item:last-child {
-  border-bottom: none;
-}
+.summary-item:last-child { border-bottom: none; }
 
 .summary-item-header {
   display: flex;
@@ -355,30 +420,14 @@ input[type="number"] {
   gap: 8px;
 }
 
-.summary-item-details {
-  color: #555;
-}
+.summary-item-details { color: #555; }
 
 .summary-total {
   display: flex;
   justify-content: space-between;
-  font-weight: 700;
+  font-weight: 900;
   margin-top: 10px;
   font-size: 1rem;
-}
-
-.payment-options {
-  margin-top: 12px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.payment-options label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
 }
 
 .address-grid {
@@ -403,10 +452,14 @@ input[type="number"] {
   font-size: 0.9rem;
 }
 
+.empty {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Desktop */
 @media (min-width: 720px) {
-  main {
-    padding-top: 24px;
-  }
+  main { padding-top: 24px; }
 
   .layout {
     display: grid;
@@ -419,37 +472,14 @@ input[type="number"] {
     padding-inline: 24px;
   }
 
-  .address-row.two-cols {
-    flex-direction: row;
-  }
-
-  .address-row.two-cols > div {
-    flex: 1;
-  }
-
-  .address-row.two-cols > div.small {
-    flex: 0.5;
-  }
+  .address-row.two-cols { flex-direction: row; }
+  .address-row.two-cols > div { flex: 1; }
+  .address-row.two-cols > div.small { flex: 0.5; }
 }
 
-.empty {
-  font-size: 0.9rem;
-  color: #777;
-}
-
-/* ===== Mobile fix (iFood-like) ===== */
+/* Mobile */
 @media (max-width: 480px) {
-  body {
-    background: #fafafa;
-  }
-
-  header {
-    padding: 10px 12px;
-  }
-
-  main {
-    padding: 10px 10px 24px;
-  }
+  main { padding: 10px 10px 24px; }
 
   .step-indicator {
     font-size: 0.82rem;
@@ -457,34 +487,16 @@ input[type="number"] {
     margin-bottom: 10px;
   }
 
-  .promo-card,
-  .summary-card {
+  .promo-card, .summary-card {
     padding: 12px;
     border-radius: 12px;
   }
 
-  .promo-card h1 {
-    font-size: 1.15rem;
-  }
+  .promo-card h1 { font-size: 1.15rem; }
+  .promo-card p { font-size: 0.85rem; margin-bottom: 6px; }
+  .promo-price { font-size: 1.15rem; margin-bottom: 10px; }
 
-  .promo-card p {
-    font-size: 0.85rem;
-    margin-bottom: 6px;
-  }
-
-  .promo-price {
-    font-size: 1.15rem;
-    margin-bottom: 10px;
-  }
-
-  .field-label {
-    font-size: 0.85rem;
-    margin-bottom: 6px;
-  }
-
-  .card-grid {
-    gap: 8px;
-  }
+  .field-label { font-size: 0.85rem; margin-bottom: 6px; }
 
   .product-card {
     padding: 10px;
@@ -492,402 +504,13 @@ input[type="number"] {
     border-radius: 12px;
   }
 
-  /* imagem menor no mobile */
-  .product-image-placeholder,
   .product-image {
-    width: 56px !important;
-    height: 56px !important;
+    width: 56px;
+    height: 56px;
     border-radius: 10px;
   }
 
-  /* tipografia mais compacta */
-  .product-info-title {
-    font-size: 0.9rem;
-    line-height: 1.15;
-    margin-bottom: 2px;
-  }
-
-  .product-info-des
-
-  /* ===== HERO (topo estilo referência) ===== */
-.hero{
-  position: relative;
-  background: #111;
+  .product-info-title { font-size: 0.9rem; line-height: 1.15; }
+  .product-info-desc { font-size: 0.78rem; line-height: 1.2; }
+  .product-info-price { font-size: 0.8rem; }
 }
-
-/* fundo com foto */
-.hero-bg{
-  height: 190px;
-  background-image: url("imgs/hero-burgers.jpg");
-  background-size: cover;
-  background-position: center;
-  filter: saturate(1.05) contrast(1.05);
-}
-
-/* escurece um pouco pra ficar igual referência */
-.hero-bg::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; top:0;
-  height:190px;
-  background: linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.55));
-}
-
-/* topo (seta e menu) */
-.hero-top{
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  display:flex;
-  align-items:center;
-  gap: 8px;
-  z-index: 3;
-}
-.hero-spacer{ flex: 1; }
-.hero-icon-btn{
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  border: 0;
-  background: rgba(255,255,255,.92);
-  box-shadow: 0 6px 18px rgba(0,0,0,.20);
-  cursor: pointer;
-  font-size: 18px;
-}
-
-/* “card” branco por cima do fundo */
-.hero-card{
-  position: relative;
-  z-index: 2;
-  margin: -56px auto 0;
-  background: #fff;
-  border-top-left-radius: 22px;
-  border-top-right-radius: 22px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  padding: 58px 16px 14px;
-  max-width: 980px;
-  box-shadow: 0 -10px 24px rgba(0,0,0,.12);
-}
-
-/* círculo da logo */
-.hero-logo-wrap{
-  position:absolute;
-  left: 50%;
-  top: -46px;
-  transform: translateX(-50%);
-  width: 92px;
-  height: 92px;
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 10px 26px rgba(0,0,0,.18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow: hidden;
-  border: 4px solid #fff;
-}
-
-.hero-logo{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* fallback caso não tenha logo */
-.hero-logo-fallback{
-  display:none;
-  font-weight: 800;
-  color: #b71c1c;
-  font-size: 24px;
-}
-.hero-logo-wrap.no-logo .hero-logo-fallback{
-  display:block;
-}
-.hero-logo-wrap.no-logo{
-  background: #fff;
-}
-
-/* título central */
-.hero-title{
-  text-align:center;
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  margin-bottom: 10px;
-}
-
-/* linha de informações */
-.hero-info{
-  display:flex;
-  flex-direction: column;
-  align-items:center;
-  gap: 10px;
-}
-
-.hero-pill{
-  display:inline-flex;
-  align-items:center;
-  gap: 8px;
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 13px;
-}
-.hero-pill-open{
-  background: #e8f5e9;
-  color: #1b5e20;
-}
-.hero-pill .dot{
-  width: 10px; height: 10px;
-  border-radius: 999px;
-  background: #2e7d32;
-}
-
-.hero-metas{
-  display:flex;
-  flex-wrap: wrap;
-  justify-content:center;
-  gap: 10px 14px;
-  font-size: 14px;
-  color: #333;
-}
-.hero-metas .meta{
-  display:inline-flex;
-  align-items:center;
-  gap: 6px;
-}
-.hero-metas .ico{
-  opacity: .9;
-}
-.hero-metas .muted{
-  color: #777;
-  font-weight: 500;
-}
-
-/* dá um respiro antes do conteúdo principal */
-main{
-  padding-top: 10px;
-}
-
-/* Header NÃO fixo */
-header.hero{
-  position: relative !important;
-  top: auto !important;
-}
-
-/* ===== HERO (corrigido) ===== */
-header.hero{
-  background: #111;
-}
-
-/* Fundo */
-.hero-bg{
-  height: 200px;
-  background: url("imgs/hero-burgers.jpg") center/cover no-repeat;
-  position: relative;
-}
-.hero-bg::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.55));
-}
-
-/* Card branco */
-.hero-card{
-  position: relative;
-  background: #fff;
-  max-width: 980px;
-  margin: -40px auto 0;           /* sobe menos (evita cortar) */
-  border-radius: 24px 24px 0 0;
-  padding: 64px 16px 14px;        /* espaço pra logo */
-  box-shadow: 0 -10px 24px rgba(0,0,0,.12);
-}
-
-/* Logo circular */
-.hero-logo-wrap{
-  position:absolute;
-  left:50%;
-  top:-46px;
-  transform:translateX(-50%);
-  width: 92px;
-  height: 92px;
-  border-radius: 999px;
-  background:#fff;
-  box-shadow: 0 10px 26px rgba(0,0,0,.18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  border: 4px solid #fff;
-}
-.hero-logo{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.hero-logo-fallback{
-  display:none;
-  font-weight:800;
-  color:#b71c1c;
-  font-size:24px;
-}
-.hero-logo-wrap.no-logo .hero-logo-fallback{ display:block; }
-
-/* Título central */
-.hero-title{
-  text-align:center;
-  font-size: 26px;
-  font-weight: 800;
-  margin: 2px 0 10px;
-}
-
-/* Infos */
-.hero-info{
-  display:flex;
-  flex-direction: column;
-  align-items:center;
-  gap: 10px;
-}
-.hero-metas{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap: 10px 14px;
-  font-size: 14px;
-  color:#333;
-}
-.hero-metas .muted{ color:#777; }
-
-/* Mobile: mais compacto */
-@media (max-width: 480px){
-  .hero-bg{ height: 170px; }
-  .hero-card{ margin-top: -34px; padding-top: 60px; }
-  .hero-title{ font-size: 22px; }
-}
-
-/* Badge centralizado */
-.hero-badge,
-#promo-badge{
-  display: block;
-  width: fit-content;
-  margin: 10px auto 0;   /* centraliza */
-  text-align: center;
-}
-
-/* ===== FIX HERO (paths corretos + layout) ===== */
-
-/* garantir que NÃO fica sticky */
-header.hero{
-  position: relative !important;
-  top: auto !important;
-}
-
-/* fundo com imagem (ATENÇÃO: ../imgs porque o CSS está em /css) */
-.hero-bg{
-  height: 190px;
-  background: url("../imgs/hero-burgers.jpg") center/cover no-repeat !important;
-  position: relative;
-}
-
-/* overlay pra dar contraste */
-.hero-bg::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.55));
-}
-
-/* card branco */
-.hero-card{
-  position: relative;
-  background: #fff;
-  max-width: 980px;
-  margin: -46px auto 0;
-  border-radius: 24px 24px 0 0;
-  padding: 64px 16px 14px;
-  box-shadow: 0 -10px 24px rgba(0,0,0,.12);
-}
-
-/* logo circular central */
-.hero-logo-wrap{
-  position:absolute;
-  left:50%;
-  top:-46px;
-  transform:translateX(-50%);
-  width: 92px;
-  height: 92px;
-  border-radius: 999px;
-  background:#fff;
-  box-shadow: 0 10px 26px rgba(0,0,0,.18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  border: 4px solid #fff;
-  z-index: 2;
-}
-
-.hero-logo{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.hero-logo-fallback{
-  display:none;
-  font-weight:800;
-  color:#b71c1c;
-  font-size:24px;
-}
-.hero-logo-wrap.no-logo .hero-logo-fallback{ display:block; }
-
-/* título central (garante que aparece) */
-.hero-title{
-  display:block !important;
-  text-align:center;
-  font-size: 24px;
-  font-weight: 800;
-  margin: 6px 0 10px;
-  color: #111;
-}
-
-/* infos */
-.hero-info{
-  display:flex;
-  flex-direction: column;
-  align-items:center;
-  gap: 10px;
-}
-
-.hero-metas{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap: 10px 14px;
-  font-size: 14px;
-  color:#333;
-}
-.hero-metas .muted{ color:#777; }
-
-/* badge centralizado */
-.hero-badge,
-#promo-badge{
-  display: block;
-  width: fit-content;
-  margin: 10px auto 0;
-  text-align: center;
-}
-
-/* mobile mais compacto */
-@media (max-width: 480px){
-  .hero-bg{ height: 160px; }
-  .hero-card{ margin-top: -38px; padding-top: 58px; }
-  .hero-title{ font-size: 22px; }
-}
-
-
-
-
