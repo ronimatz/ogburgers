@@ -208,6 +208,15 @@ btnContinuar?.addEventListener("click", () => {
   }
 
   state.combos.push({ burger1, burger2, drink });
+      // 🔥 Meta Pixel — AddToCart
+    if (typeof fbq === "function") {
+      fbq("track", "AddToCart", {
+        content_name: "Combo 2 Burgers + Refri",
+        value: PRICE_PER_COMBO,
+        currency: "BRL",
+      });
+    }
+
 
   // reset seleção
   state.selectedBurger1 = null;
@@ -296,6 +305,15 @@ btnFinalizar?.addEventListener("click", () => {
     return;
   }
 
+    // 🔥 Meta Pixel — InitiateCheckout
+  if (typeof fbq === "function") {
+    fbq("track", "InitiateCheckout", {
+      value: qty * PRICE_PER_COMBO,
+      currency: "BRL",
+      num_items: qty,
+    });
+  }
+    
   window.location.href = checkoutUrl;
 });
 
