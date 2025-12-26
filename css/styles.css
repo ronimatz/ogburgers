@@ -509,3 +509,166 @@ input[type="number"] {
 
   .product-info-des
 
+  /* ===== HERO (topo estilo referência) ===== */
+.hero{
+  position: relative;
+  background: #111;
+}
+
+/* fundo com foto */
+.hero-bg{
+  height: 190px;
+  background-image: url("imgs/hero-burgers.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+/* escurece um pouco pra ficar igual referência */
+.hero-bg::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:0;
+  height:190px;
+  background: linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.55));
+}
+
+/* topo (seta e menu) */
+.hero-top{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  z-index: 3;
+}
+.hero-spacer{ flex: 1; }
+.hero-icon-btn{
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 0;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 6px 18px rgba(0,0,0,.20);
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* “card” branco por cima do fundo */
+.hero-card{
+  position: relative;
+  z-index: 2;
+  margin: -56px auto 0;
+  background: #fff;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 58px 16px 14px;
+  max-width: 980px;
+  box-shadow: 0 -10px 24px rgba(0,0,0,.12);
+}
+
+/* círculo da logo */
+.hero-logo-wrap{
+  position:absolute;
+  left: 50%;
+  top: -46px;
+  transform: translateX(-50%);
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(0,0,0,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow: hidden;
+  border: 4px solid #fff;
+}
+
+.hero-logo{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* fallback caso não tenha logo */
+.hero-logo-fallback{
+  display:none;
+  font-weight: 800;
+  color: #b71c1c;
+  font-size: 24px;
+}
+.hero-logo-wrap.no-logo .hero-logo-fallback{
+  display:block;
+}
+.hero-logo-wrap.no-logo{
+  background: #fff;
+}
+
+/* título central */
+.hero-title{
+  text-align:center;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 10px;
+}
+
+/* linha de informações */
+.hero-info{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 10px;
+}
+
+.hero-pill{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+.hero-pill-open{
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+.hero-pill .dot{
+  width: 10px; height: 10px;
+  border-radius: 999px;
+  background: #2e7d32;
+}
+
+.hero-metas{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  gap: 10px 14px;
+  font-size: 14px;
+  color: #333;
+}
+.hero-metas .meta{
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+}
+.hero-metas .ico{
+  opacity: .9;
+}
+.hero-metas .muted{
+  color: #777;
+  font-weight: 500;
+}
+
+/* dá um respiro antes do conteúdo principal */
+main{
+  padding-top: 10px;
+}
+
+
